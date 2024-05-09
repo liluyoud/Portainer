@@ -1,0 +1,34 @@
+version: '3.7'
+
+services:
+  blazorapp:
+    image: ${DOCKER_REGISTRY-}blazorapp
+    build:
+      context: .
+      dockerfile: BlazorApp/BlazorApp/Dockerfile
+    networks:
+      - DcltNet  
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 512M
+      labels:
+        - traefik.enable=1
+        - traefik.http.routers.testeapi.rule=Host(`blazorapp.dclt.com.br`)
+        - traefik.http.routers.testeapi.entrypoints=websecure
+        - traefik.http.routers.testeapi.priority=1
+        - traefik.http.routers.testeapi.tls.certresolver=letsencryptresolver
+        - traefik.http.routers.testeapi.service=blazorapp
+        - traefik.http.services.testeapi.loadbalancer.server.port=8080
+        - traefik.http.services.testeapi.loadbalancer.passHostHeader=1
+
+networks:
+  DcltNet: 
+    external: true
+    name: DcltNet 
