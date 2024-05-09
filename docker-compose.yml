@@ -20,13 +20,13 @@ services:
           memory: 512M
       labels:
         - traefik.enable=1
-        - traefik.http.routers.testeapi.rule=Host(`blazorapp.dclt.com.br`)
-        - traefik.http.routers.testeapi.entrypoints=websecure
-        - traefik.http.routers.testeapi.priority=1
-        - traefik.http.routers.testeapi.tls.certresolver=letsencryptresolver
-        - traefik.http.routers.testeapi.service=blazorapp
-        - traefik.http.services.testeapi.loadbalancer.server.port=8080
-        - traefik.http.services.testeapi.loadbalancer.passHostHeader=1
+        - traefik.http.routers.blazorapp.rule=Host(`blazorapp.dclt.com.br`)
+        - traefik.http.routers.blazorapp.entrypoints=websecure
+        - traefik.http.routers.blazorapp.priority=1
+        - traefik.http.routers.blazorapp.tls.certresolver=letsencryptresolver
+        - traefik.http.routers.blazorapp.service=blazorapp
+        - traefik.http.services.blazorapp.loadbalancer.server.port=8080
+        - traefik.http.services.blazorapp.loadbalancer.passHostHeader=1
 
 networks:
   DcltNet: 
